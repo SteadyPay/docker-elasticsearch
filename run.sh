@@ -47,8 +47,8 @@ if [ ! -z "${SHARD_ALLOCATION_AWARENESS_ATTR}" ]; then
     fi
 fi
 
-# remove x-pack-ml module
-rm -rf /elasticsearch/modules/x-pack/x-pack-ml
+# Remove x-pack-ml module
+rm -rf /elasticsearch/modules/x-pack-ml
 
 # run
 if [[ $(whoami) == "root" ]]; then
