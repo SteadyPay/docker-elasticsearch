@@ -9,7 +9,7 @@ fi
 
 # Set a random node name if not set.
 if [ -z "${NODE_NAME}" ]; then
-	NODE_NAME=$(uuidgen)
+    NODE_NAME=$(uuidgen)
 fi
 export NODE_NAME=${NODE_NAME}
 
@@ -47,16 +47,20 @@ if [ ! -z "${SHARD_ALLOCATION_AWARENESS_ATTR}" ]; then
     fi
 fi
 
-# remove x-pack-ml module
-rm -rf /elasticsearch/modules/x-pack/x-pack-ml
+# Remove x-pack-ml module
+rm -rf /elasticsearch/modules/x-pack-ml
 
 # run
 if [[ $(whoami) == "root" ]]; then
-    chown -R elasticsearch:elasticsearch $BASE
-    chown -R elasticsearch:elasticsearch /data
+    echo "Changing ownership of $BASE folder"
+    find . -type f -print0 | xargs -0 chown elasticsearch:elasticsearch $BASE
+
+    echo "Changing ownership of /data folder"
+    find . -type f -print0 | xargs -0 chown elasticsearch:elasticsearch /data
+
     exec su-exec elasticsearch $BASE/bin/elasticsearch $ES_EXTRA_ARGS
 else
-    # the container's first process is not running as 'root', 
+    # the container's first process is not running as 'root',
     # it does not have the rights to chown. however, we may
     # assume that it is being ran as 'elasticsearch', and that
     # the volumes already have the right permissions. this is
