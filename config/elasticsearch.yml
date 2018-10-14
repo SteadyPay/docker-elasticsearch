@@ -29,6 +29,7 @@ http:
 
 discovery:
   zen:
-    minimum_master_nodes: ${NUMBER_OF_MASTERS}
+    ping.unicast.hosts: ${DISCOVERY_SERVICE}
+    minimum_master_nodes: ${MINIMUM_MASTER_NODES}
 
 xpack.ml.enabled: false
